@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "plasmath"
+version = "0.1.0"
+description = "Basic plasma physics calculations"
+authors = ["Mariana Moreira <mtrocadomoreira@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Pint = "^0.24.3"
+sympy = "^1.13.3"
+numpy = "^2.1.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+hypothesis = "^6.114.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
