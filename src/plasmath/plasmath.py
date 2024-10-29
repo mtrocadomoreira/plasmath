@@ -266,17 +266,26 @@ def profile_gauss_rcyl(sig: float, var: str = "r", printpars: bool = True):
     return (sm.exp(-(var**2) / expfac), var)
 
 
-#  TODO: specify either xc or xhead
+# TODO: write written formula without '<=' symbols (I think this is a problem for osiris, have to make it < or >)
 @symb_args
 def profile_cos(
     sig: float,
     xc: float = 0.0,
+    xhead: float | None = None,
     var: str = "x",
     sigcut: float | None = None,
     printpars: bool = True,
 ):
     """normalized cosine profile, with the option to cut the leading part (sigcut: distance from center to cut position)"""
 
+    # Sort out xc and xhead
+    if xhead is not None:
+        if sigcut is None:
+            xc = xhead - np.sqrt(2 * np.pi) * sig
+        else:
+            xc = xhead - sigcut
+
+    # Go into symbolic mode
     var, sig_s, xc_s, sigcut_s = sm.symbols(
         " ".join([var, "sig_s", "xc_s", "sigcut_s"])
     )
