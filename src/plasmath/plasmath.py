@@ -317,3 +317,56 @@ def profile_cos(
         ),
         var,
     )
+
+
+# TODO: write written formula without '<=' symbols (I think this is a problem for osiris, have to make it < or >)
+@symb_args
+def profile_parab(
+    sig: float,
+    xc: float = 0.0,
+    xhead: float | None = None,
+    var: str = "x",
+    sigcut: float | None = None,
+    printpars: bool = True,
+):
+    """normalized parabolic profile, with the option to cut the leading part (sigcut: distance from center to cut position)"""
+
+    # Sort out xc and xhead
+    if xhead is not None:
+        if sigcut is None:
+            xc = xhead - np.sqrt(5) * sig
+        else:
+            xc = xhead - sigcut
+
+    # Go into symbolic mode
+    var, sig_s, xc_s, sigcut_s = sm.symbols(
+        " ".join([var, "sig_s", "xc_s", "sigcut_s"])
+    )
+    sig_s = sm.S(sig)
+    xc_s = sm.S(xc)
+
+    if sigcut is None:
+        frontlimit = sm.sqrt(5) * sig_s + xc_s
+    else:
+        sigcut_s = sm.S(sigcut)
+        frontlimit = sigcut_s + xc_s
+
+    backlimit = xc_s - sm.sqrt(5) * sig_s
+    sigquot = 5 * sig_s**2
+
+    def fparab(xvar, sig, xc):
+        return 1 - (xvar - xc_s) ** 2 / sigquot
+
+    if printpars is True:
+        print(
+            f"Written formula:\n 1.0 - ({var} - {sm.N(xc_s)})^2 / {sm.N(sigquot)} for {var} >= {sm.N(backlimit)} and {var} <= {sm.N(frontlimit)}"
+        )
+
+    return (
+        sm.Piecewise(
+            (0.0, var < backlimit),
+            (0.0, var > frontlimit),
+            (fparab(var, sig_s, xc_s), True),
+        ),
+        var,
+    )
