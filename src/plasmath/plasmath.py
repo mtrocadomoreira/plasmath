@@ -250,7 +250,9 @@ def profile_gauss(sig: float, xc: float = 0.0, var: str = "x", printpars: bool =
 
     expfac = 2 * sig_s**2
     if printpars is True:
-        print(f"Written formula:\n exp(-(({var} - {sm.N(xc_s)})^2) / {sm.N(expfac)})")
+        print(
+            f"Written formula:\n exp(-(({var} - {sm.N(xc_s)})^2) / {sm.N(expfac):.6f})"
+        )
     return (sm.exp(-((var - xc_s) ** 2) / expfac), var)
 
 
@@ -262,7 +264,7 @@ def profile_gauss_rcyl(sig: float, var: str = "r", printpars: bool = True):
 
     expfac = sig_s**2
     if printpars is True:
-        print(f"Written formula:\n exp(-({var}^2) / {sm.N(expfac)})")
+        print(f"Written formula:\n exp(-({var}^2) / {sm.N(expfac):.6f})")
     return (sm.exp(-(var**2) / expfac), var)
 
 
@@ -306,7 +308,7 @@ def profile_cos(
 
     if printpars is True:
         print(
-            f"Written formula:\n 0.5*(1.0 + cos({sm.N(cosfactor)} * ({var} - {sm.N(xc_s)}))) for {var} >= {sm.N(backlimit)} and {var} <= {sm.N(frontlimit)}"
+            f"Written formula:\n 0.5*(1.0 + cos({sm.N(cosfactor):.6f} * ({var} - ({sm.N(xc_s):.6f})))) for {var} >= {sm.N(backlimit):.6f} and {var} <= {sm.N(frontlimit):.6f}"
         )
 
     return (
@@ -359,7 +361,7 @@ def profile_parab(
 
     if printpars is True:
         print(
-            f"Written formula:\n 1.0 - ({var} - {sm.N(xc_s)})^2 / {sm.N(sigquot)} for {var} >= {sm.N(backlimit)} and {var} <= {sm.N(frontlimit)}"
+            f"Written formula:\n 1.0 - ({var} - ({sm.N(xc_s):.6f}))^2 / {sm.N(sigquot):.6f} for {var} >= {sm.N(backlimit):.6f} and {var} <= {sm.N(frontlimit):.6f}"
         )
 
     return (
