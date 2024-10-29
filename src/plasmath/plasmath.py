@@ -70,19 +70,45 @@ def betatron_skin_depth(nb0, Mb, qb, gamma):
     return skd_beta.to_base_units().to_compact()
 
 
-@ureg.check("1", "[length]", "[length]", None)
-def nb0_peak(Nb, sigz, sigr, transv_profile: str = "gauss"):
+# TODO: implement flat profiles
+@ureg.check("1", "[length]", "[length]", None, None)
+def nb0_peak(
+    Nb, sigz, sigr, longit_profile: str = "cos", transv_profile: str = "gauss"
+):
     """peak density for a Gaussian (transv. and longit.) profile [1/cm^3]"""
+
+    match longit_profile:
+        case "cos":
+            int_longit = np.sqrt(2 * np.pi) * sigz
+        case "gauss":
+            int_longit = np.sqrt(2 * np.pi) * sigz
+        case "parab":
+            int_longit = 4 / 3 * np.sqrt(5) * sigz
+        case "flat":
+            raise NotImplementedError(
+                "Sorry, the flat longitudinal profile has not been implemented yet."
+            )
+        case _:
+            raise ValueError(
+                'Invalid longitudinal profile. Valid keywords for `longit_profile` are "cos", "gauss", "parab" or "flat"'
+            )
 
     match transv_profile:
         case "gauss":
-            nb0 = Nb / ((2 * np.pi) ** (3 / 2) * sigr**2 * sigz)
+            int_transv = sigr**2
+        case "gauss_r":
+            int_transv = sigr**2 / 2
         case "flat":
-            nb0 = Nb / ((2 * np.pi) ** (3 / 2) * sigr**2 * sigz)
+            raise NotImplementedError(
+                "Sorry, the flat transverse profile has not been implemented yet."
+            )
         case _:
             raise ValueError(
-                'Invalid transverse profile. Valid keywords are "gauss" or "flat"'
+                'Invalid transverse profile. Valid keywords for `transv_profile` are "gauss", "gauss_r", or "flat"'
             )
+
+    nb0 = Nb / (2 * np.pi * int_longit * int_transv)
+
     return nb0.to(1 / ureg.cm**3)
 
 
