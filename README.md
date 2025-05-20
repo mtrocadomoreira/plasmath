@@ -5,25 +5,23 @@ Plasmath is a Python module for plasma physics calculations and unit handling. I
 
 ## Features
 
-- Unit handling using the `pint` library
+- Unit handling using [the `pint` library](https://pint.readthedocs.io/en/stable/)
 - Plasma physics calculations (e.g., plasma frequency, skin depth)
 - Beam-related calculations (e.g., beam frequency, betatron frequency)
 - Normalization functions for various plasma quantities
-- Profile generation functions (Gaussian, cylindrical Gaussian, cosine) with symbolic variables using the `sympy` library
+- Profile generation functions (Gaussian, cylindrical Gaussian, cosine) with symbolic variables using [the `sympy` library](https://www.sympy.org/en/index.html)
 - Utility functions for numerical simulations
 
 ## Installation
 
-To use Plasmath, make sure you have the following dependencies installed:
+> [!IMPORTANT] 
+> Plasmath hasn't been released as a package yet. 
+> Please note that it is still undergoing active development and may therefore lack documentation and experience frequent breaking changes. 
 
-- numpy
-- sympy
-- pint
 
-You can install these dependencies using pip:
-
+Plasmath can be installed using the following command:
 ```bash
-pip install numpy sympy pint
+pip install git+https://github.com/mtrocadomoreira/plasmath.git
 ```
 
 # Usage
