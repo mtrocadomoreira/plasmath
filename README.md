@@ -34,25 +34,24 @@ import plasmath as plm
 
 # Get the unit registry 
 # (see pint documentation for more information)
-u = plasmath.get_ureg()
+u = plm.get_ureg()
 
 # Calculate plasma frequency
 n0 = 1e18 * u.cm**-3
-omega_p = plasmath.plasma_frequency(n0)
+omega_p = plm.plasma_frequency(n0)
 print(f"Plasma frequency: {omega_p}")
 
 # Calculate plasma skin depth
-skin_depth = plasmath.plasma_skin_depth(n0)
+skin_depth = plm.plasma_skin_depth(n0)
 print(f"Plasma skin depth: {skin_depth}")
 
 # Normalize a quantity
 length = 1 * u.mm
-normalized_length = plasmath.norm(length, n0)
+normalized_length = plm.norm(length, n0)
 print(f"Normalized length: {normalized_length}")
 
 # Generate a Gaussian profile
-profile, var = plasmath.profile_gauss(sig=0.1*u.mm, xc=0.0, var='x')
-print(f"Gaussian profile: {profile}")
+profile, var = plm.profile_gauss(sig=0.1*u.mm, xc=0.0, var='x')
 ```
 
 # Main functions
