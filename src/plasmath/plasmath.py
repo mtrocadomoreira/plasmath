@@ -49,6 +49,13 @@ def plasma_skin_depth(n0):
     return skd.to("cm").to_compact()
 
 
+@ureg.check("[number_density]")
+def wavebreaking_limit(n0):
+    e0 = ureg.m_e * ureg.c * plasma_frequency(n0) / ureg.e
+
+    return e0.to("MV/m").to_compact()
+
+
 @ureg.check("[number_density]", "[mass]", "[charge]")
 def beam_frequency(nb0, Mb, qb):
     """beam frequency [rad/s]"""
