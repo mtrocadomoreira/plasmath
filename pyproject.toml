@@ -1,19 +1,24 @@
-[tool.poetry]
+[project]
 name = "plasmath"
-version = "0.1.0"
+dynamic = ["version", "dependencies", "requires-python"]
 description = "Basic plasma physics calculations"
-authors = ["Mariana Moreira <mtrocadomoreira@gmail.com>"]
+authors = [
+     {name = "Mariana Moreira", email = "mtrocadomoreira@gmail.com"},
+]
 readme = "README.md"
 
+[tool.poetry]
+version = "0.1.0"
+
 [tool.poetry.dependencies]
-python = ">=3.10"
-Pint = ">=0.24.3"
-sympy = ">=1.13.3"
-numpy = ">=2.1.2"
+python = ">=3.11, <4.0"
+Pint = "^0.24.4"
+sympy = "^1.14.0"
+numpy = "^2.3.0"
 
 [tool.poetry.group.dev.dependencies]
-pytest = ">=8.3.3"
-hypothesis = ">=6.114.1"
+pytest = "^8.4.1"
+hypothesis = "^6.135.13"
 
 [build-system]
 requires = ["poetry-core"]
